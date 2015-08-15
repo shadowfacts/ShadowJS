@@ -1,11 +1,13 @@
 package net.shadowfacts.shadowjs.js.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.shadowfacts.shadowjs.api.item.Ingredient;
 
 /**
  * @author shadowfacts
  */
-public class WrappedBlock {
+public class WrappedBlock implements Ingredient {
 
 	private Block block;
 
@@ -43,4 +45,8 @@ public class WrappedBlock {
 		return this;
 	}
 
+	@Override
+	public ItemStack getItemStack(int count) {
+		return new ItemStack(block, count);
+	}
 }
