@@ -1,0 +1,15 @@
+repositories {
+	maven {
+		name "shadowfacts"
+		url "http://mvn.rx14.co.uk/shadowfacts/"
+	}
+}
+
+configurations {
+	shade
+	compile.extendsFrom shade
+}
+
+dependencies {
+	shade group: "net.shadowfacts", name: "ShadowMC", version: "${config.mc_version}-${config.shadowmc_version}", classifier: "deobf"
+}
