@@ -2,9 +2,11 @@ package net.shadowfacts.shadowjs.js.recipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.shadowfacts.shadowjs.api.item.Ingredient;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author shadowfacts
@@ -109,6 +111,15 @@ public class CraftingManager {
 
 	public static void registerFurnaceRecipe(Ingredient input, Ingredient result) {
 		registerFurnaceRecipe(input, result, 0f);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void removeAllRecipes(Ingredient output) {
+		List<IRecipe> recipes = net.minecraft.item.crafting.CraftingManager.getInstance().getRecipeList();
+
+		List<IRecipe> toRemove = new ArrayList<>();
+		recipes.stream().filter(recipe -> recipe.getRecipeOutput() != null).filter(recipe -> recipe.getRecipeOutput().isItemEqual(output.getItemStack())).forEach(toRemove::add);
+		toRemove.stream().forEach(recipes::remove);
 	}
 
 
