@@ -1,6 +1,8 @@
 package net.shadowfacts.shadowjs.js;
 
 import net.shadowfacts.shadowjs.ShadowJS;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.script.ScriptException;
 import java.io.File;
@@ -21,6 +23,10 @@ public class ShadowJSInterface {
 			ShadowJS.log.error("The specified script file (%s) did not exist!", fileName);
 			e.printStackTrace();
 		}
+	}
+
+	public static Logger getLogger(String name) {
+		return LogManager.getLogger(name);
 	}
 
 }
