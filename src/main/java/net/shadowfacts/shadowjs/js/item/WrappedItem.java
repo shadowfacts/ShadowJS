@@ -28,4 +28,9 @@ public class WrappedItem {
 		return this;
 	}
 
+	public WrappedItem setMaxDamage(int damage) {
+		item.setMaxDamage(damage);
+		return this;
+	}
+
 }
