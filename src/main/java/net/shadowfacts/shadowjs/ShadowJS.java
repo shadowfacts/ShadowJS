@@ -47,11 +47,9 @@ public class ShadowJS {
 	public void postInit(FMLPostInitializationEvent event) throws ScriptException {
 		scriptEngine = new ScriptEngineManager().getEngineByName("nashorn");
 
-//		engine.createBindings()
 
 		String includes = "";
 		try {
-//			includes = Files.toString(new File("includes.js"), Charsets.UTF_8);
 			includes = Resources.toString(Resources.getResource("includes.js"), Charsets.UTF_8);
 		} catch (IOException e) {
 			ShadowJS.log.error("There was a problem loading the includes file.");
@@ -72,25 +70,6 @@ public class ShadowJS {
 			ShadowJS.log.warn("./config/shadowfacts/scripts/main.js did not exist!");
 			ShadowJS.log.info("There's really no point using ShadowJS if you don't have a main script :V");
 		}
-
-
-//		final String finalIncludes = includes;
-//
-//		Arrays.stream(scriptsDir.listFiles()).filter(file -> file.getName().endsWith(".js")).forEach(file -> {
-//			try {
-//
-//				String text = finalIncludes + Files.toString(file, Charsets.UTF_8);
-//
-//				engine.eval(text);
-////				engine.eval(new FileReader(file));
-//			} catch (IOException e) {
-//				ShadowJS.log.error("There was a problem loading the script");
-//			} catch (ScriptException e) {
-//				ShadowJS.log.error("There was a problem evaluating the script: " + file.getAbsolutePath());
-//				e.printStackTrace();
-//			}
-//		});
-
 	}
 
 	public File getScriptsDir() {
