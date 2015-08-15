@@ -103,5 +103,13 @@ public class CraftingManager {
 
 	}
 
+	public static void registerFurnaceRecipe(Ingredient input, Ingredient result, float xp) {
+		GameRegistry.addSmelting(input.getItemStack(), result.getItemStack(), xp);
+	}
+
+	public static void registerFurnaceRecipe(Ingredient input, Ingredient result) {
+		registerFurnaceRecipe(input, result, 0f);
+	}
+
 
 }
