@@ -6,6 +6,8 @@ import com.google.common.io.Resources;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import net.shadowfacts.shadowjs.command.CommandHand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -70,6 +72,11 @@ public class ShadowJS {
 			ShadowJS.log.warn("./config/shadowfacts/scripts/main.js did not exist!");
 			ShadowJS.log.info("There's really no point using ShadowJS if you don't have a main script :V");
 		}
+	}
+
+	@Mod.EventHandler
+	public void serverStarting(FMLServerStartingEvent event) {
+		event.registerServerCommand(CommandHand.instance);
 	}
 
 	public File getScriptsDir() {
