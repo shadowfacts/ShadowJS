@@ -2,6 +2,7 @@ package net.shadowfacts.shadowjs.js.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import net.shadowfacts.shadowjs.api.item.Ingredient;
 
 /**
@@ -42,6 +43,11 @@ public class WrappedBlock implements Ingredient {
 
 	public WrappedBlock setHarvestLevel(String tool, int level, int metadata) {
 		block.setHarvestLevel(tool, level, metadata);
+		return this;
+	}
+
+	public WrappedBlock registerOreDictionaryName(String name) {
+		OreDictionary.registerOre(name, block);
 		return this;
 	}
 

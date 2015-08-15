@@ -2,6 +2,7 @@ package net.shadowfacts.shadowjs.js.item;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import net.shadowfacts.shadowjs.api.item.Ingredient;
 
 /**
@@ -32,6 +33,11 @@ public class WrappedItem implements Ingredient {
 
 	public WrappedItem setMaxDamage(int damage) {
 		item.setMaxDamage(damage);
+		return this;
+	}
+
+	public WrappedItem registerOreDictionaryName(String name) {
+		OreDictionary.registerOre(name, item);
 		return this;
 	}
 

@@ -58,12 +58,14 @@ public class ShadowJS {
 			e.printStackTrace();
 		}
 
+		log.info("Evaluating includes");
 		scriptEngine.eval(includes);
 
 
 		File main = new File(scriptsDir.getAbsolutePath() + "/main.js");
 		if (main.exists()) {
 			try {
+				log.info("Evaluating main.js");
 				scriptEngine.eval(new FileReader(main));
 			} catch (FileNotFoundException e) {
 				ShadowJS.log.error("There was a problem loading the main file");

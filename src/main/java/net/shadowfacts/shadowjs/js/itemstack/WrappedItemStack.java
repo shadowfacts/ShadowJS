@@ -1,6 +1,7 @@
 package net.shadowfacts.shadowjs.js.itemstack;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import net.shadowfacts.shadowjs.api.item.Ingredient;
 
 /**
@@ -12,6 +13,11 @@ public class WrappedItemStack implements Ingredient {
 
 	WrappedItemStack(ItemStack stack) {
 		this.stack = stack;
+	}
+
+	public WrappedItemStack registerOreDictionaryName(String name) {
+		OreDictionary.registerOre(name, stack);
+		return this;
 	}
 
 	@Override

@@ -15,6 +15,7 @@ public class ShadowJSInterface {
 	public static void eval(String fileName) throws ScriptException {
 		File f = new File(ShadowJS.getInstance().getScriptsDir().getAbsolutePath() + "/" + fileName);
 		try {
+			ShadowJS.log.info("Evaluating " + fileName);
 			ShadowJS.getInstance().getScriptEngine().eval(new FileReader(f));
 		} catch (FileNotFoundException e) {
 			ShadowJS.log.error("The specified script file (%s) did not exist!", fileName);
