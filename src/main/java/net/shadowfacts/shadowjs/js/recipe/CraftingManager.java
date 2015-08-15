@@ -83,5 +83,25 @@ public class CraftingManager {
 		GameRegistry.addShapedRecipe(result.getItemStack(), params.toArray());
 	}
 
+	public static void registerShapelessRecipe(Ingredient result, Ingredient... inputs) {
+		if (inputs.length > 9) throw new RuntimeException("Shapeless recipe cannot have more than 9 inputs");
+		if (inputs[0] == null) throw new RuntimeException("Shapeless recipe must have at least 1 input");
+
+		ArrayList<ItemStack> params = new ArrayList<>();
+
+		params.add(inputs[0].getItemStack());
+		if (inputs.length > 1 && inputs[1] != null) params.add(inputs[1].getItemStack());
+		if (inputs.length > 2 && inputs[2] != null) params.add(inputs[2].getItemStack());
+		if (inputs.length > 3 && inputs[3] != null) params.add(inputs[3].getItemStack());
+		if (inputs.length > 4 && inputs[4] != null) params.add(inputs[4].getItemStack());
+		if (inputs.length > 5 && inputs[5] != null) params.add(inputs[5].getItemStack());
+		if (inputs.length > 6 && inputs[6] != null) params.add(inputs[6].getItemStack());
+		if (inputs.length > 7 && inputs[7] != null) params.add(inputs[7].getItemStack());
+		if (inputs.length > 8 && inputs[8] != null) params.add(inputs[8].getItemStack());
+
+		GameRegistry.addShapelessRecipe(result.getItemStack(), params.toArray(new ItemStack[0]));
+
+	}
+
 
 }
