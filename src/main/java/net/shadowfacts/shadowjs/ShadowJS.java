@@ -13,6 +13,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -26,9 +28,14 @@ public class ShadowJS {
 	public static final String name = "ShadowJS";
 	public static final String version = "0.1.0";
 
-	private static final Logger log = LogManager.getLogger("ShadowJS");
+	public static final Logger log = LogManager.getLogger("ShadowJS");
+
+	@Mod.Instance(modId)
+	private static ShadowJS instance;
 
 	private File scriptsDir;
+
+	private ScriptEngine scriptEngine;
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -37,8 +44,8 @@ public class ShadowJS {
 	}
 
 	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-		ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+	public void postInit(FMLPostInitializationEvent event) throws ScriptException {
+		scriptEngine = new ScriptEngineManager().getEngineByName("nashorn");
 
 //		engine.createBindings()
 
@@ -50,23 +57,52 @@ public class ShadowJS {
 			ShadowJS.log.error("There was a problem loading the includes file.");
 			e.printStackTrace();
 		}
-		final String finalIncludes = includes;
 
-		Arrays.stream(scriptsDir.listFiles()).filter(file -> file.getName().endsWith(".js")).forEach(file -> {
+		scriptEngine.eval(includes);
+
+
+		File main = new File(scriptsDir.getAbsolutePath() + "/main.js");
+		if (main.exists()) {
 			try {
-
-				String text = finalIncludes + Files.toString(file, Charsets.UTF_8);
-
-				engine.eval(text);
-//				engine.eval(new FileReader(file));
-			} catch (IOException e) {
-				ShadowJS.log.error("There was a problem loading the script");
-			} catch (ScriptException e) {
-				ShadowJS.log.error("There was a problem evaluating the script: " + file.getAbsolutePath());
-				e.printStackTrace();
+				scriptEngine.eval(new FileReader(main));
+			} catch (FileNotFoundException e) {
+				ShadowJS.log.error("There was a problem loading the main file");
 			}
-		});
+		} else {
+			ShadowJS.log.warn("./config/shadowfacts/scripts/main.js did not exist!");
+			ShadowJS.log.info("There's really no point using ShadowJS if you don't have a main script :V");
+		}
 
+
+//		final String finalIncludes = includes;
+//
+//		Arrays.stream(scriptsDir.listFiles()).filter(file -> file.getName().endsWith(".js")).forEach(file -> {
+//			try {
+//
+//				String text = finalIncludes + Files.toString(file, Charsets.UTF_8);
+//
+//				engine.eval(text);
+////				engine.eval(new FileReader(file));
+//			} catch (IOException e) {
+//				ShadowJS.log.error("There was a problem loading the script");
+//			} catch (ScriptException e) {
+//				ShadowJS.log.error("There was a problem evaluating the script: " + file.getAbsolutePath());
+//				e.printStackTrace();
+//			}
+//		});
+
+	}
+
+	public File getScriptsDir() {
+		return scriptsDir;
+	}
+
+	public ScriptEngine getScriptEngine() {
+		return scriptEngine;
+	}
+
+	public static ShadowJS getInstance() {
+		return instance;
 	}
 
 }
