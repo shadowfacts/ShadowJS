@@ -9,6 +9,7 @@ import net.shadowfacts.shadowjs.api.item.Ingredient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author shadowfacts
@@ -125,8 +126,8 @@ public class CraftingManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void removeAllFurnaceRecipes(Ingredient ingredient) {
-		ItemStack result = ingredient.getItemStack();
+	public static void removeAllFurnaceRecipes(Ingredient output) {
+		ItemStack result = output.getItemStack();
 
 		ArrayList<ItemStack> toRemove = new ArrayList<>();
 		FurnaceRecipes.smelting().getSmeltingList().entrySet().stream().filter(object -> {
