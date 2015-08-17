@@ -15,6 +15,11 @@ public class WrappedItemStack implements Ingredient {
 		this.stack = stack;
 	}
 
+	public WrappedItemStack setMetadata(int metadata) {
+		stack.setItemDamage(metadata);
+		return this;
+	}
+
 	public WrappedItemStack registerOreDictionaryName(String name) {
 		OreDictionary.registerOre(name, stack);
 		return this;

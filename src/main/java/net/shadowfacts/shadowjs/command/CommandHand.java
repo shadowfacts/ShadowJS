@@ -1,5 +1,6 @@
 package net.shadowfacts.shadowjs.command;
 
+import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,17 +24,20 @@ public class CommandHand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender sender) {
-		return "Prints the modid, unlocalized name, and metadata of the held item.";
+		return "Prints the modid, internal name, and metadata of the held item.";
 	}
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		if (sender instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer)sender;
-
 			ItemStack heldStack = player.getHeldItem();
 
-			player.addChatComponentMessage(new ChatComponentText(heldStack.toString()));
+			String result = GameData.getItemRegistry().getNameForObject(heldStack.getItem());
+			result += ":" + heldStack.getItemDamage();
+
+			player.addChatComponentMessage(new ChatComponentText(result));
+
 		}
 	}
 
