@@ -2,11 +2,13 @@ package net.shadowfacts.shadowjs.js.recipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.shadowfacts.shadowjs.api.item.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author shadowfacts
@@ -101,9 +103,18 @@ public class CraftingManager {
 		if (inputs.length > 7 && inputs[7] != null) params.add(inputs[7].getItemStack());
 		if (inputs.length > 8 && inputs[8] != null) params.add(inputs[8].getItemStack());
 
-		GameRegistry.addShapelessRecipe(result.getItemStack(), params.toArray(new ItemStack[0]));
-
+		GameRegistry.addShapelessRecipe(result.getItemStack(), params.toArray());
 	}
+
+	@SuppressWarnings("unchecked")
+	public static void removeAllCraftingRecipes(Ingredient output) {
+		List<IRecipe> recipes = net.minecraft.item.crafting.CraftingManager.getInstance().getRecipeList();
+
+		List<IRecipe> toRemove = new ArrayList<>();
+		recipes.stream().filter(recipe -> recipe.getRecipeOutput() != null).filter(recipe -> recipe.getRecipeOutput().isItemEqual(output.getItemStack())).forEach(toRemove::add);
+		toRemove.stream().forEach(recipes::remove);
+	}
+
 
 	public static void registerFurnaceRecipe(Ingredient input, Ingredient result, float xp) {
 		GameRegistry.addSmelting(input.getItemStack(), result.getItemStack(), xp);
@@ -114,13 +125,18 @@ public class CraftingManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void removeAllRecipes(Ingredient output) {
-		List<IRecipe> recipes = net.minecraft.item.crafting.CraftingManager.getInstance().getRecipeList();
+	public static void removeAllFurnaceRecipes(Ingredient ingredient) {
+		ItemStack result = ingredient.getItemStack();
 
-		List<IRecipe> toRemove = new ArrayList<>();
-		recipes.stream().filter(recipe -> recipe.getRecipeOutput() != null).filter(recipe -> recipe.getRecipeOutput().isItemEqual(output.getItemStack())).forEach(toRemove::add);
-		toRemove.stream().forEach(recipes::remove);
+		ArrayList<ItemStack> toRemove = new ArrayList<>();
+		FurnaceRecipes.smelting().getSmeltingList().entrySet().stream().filter(object -> {
+			Map.Entry<ItemStack, ItemStack> entry = (Map.Entry<ItemStack, ItemStack>) object;
+			return entry.getValue().isItemEqual(result) && entry.getValue().getItemDamage() == result.getItemDamage();
+		}).forEach(object -> {
+			Map.Entry<ItemStack, ItemStack> entry = (Map.Entry<ItemStack, ItemStack>) object;
+			toRemove.add(entry.getKey());
+		});
+
+		toRemove.stream().forEach(FurnaceRecipes.smelting().getSmeltingList()::remove);
 	}
-
-
 }
