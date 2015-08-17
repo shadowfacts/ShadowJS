@@ -1,7 +1,12 @@
 repositories {
+	mavenCentral()
 	maven {
 		name "shadowfacts"
 		url "http://mvn.rx14.co.uk/shadowfacts/"
+	}
+	maven {
+		name "ChickenBones"
+		url "http://chickenbones.net/maven/"
 	}
 }
 
@@ -12,4 +17,8 @@ configurations {
 
 dependencies {
 	shade group: "net.shadowfacts", name: "ShadowMC", version: "${config.mc_version}-${config.shadowmc_version}", classifier: "deobf"
+
+	compile group: "codechicken", name: "CodeChickenLib", version: "${config.mc_version}-${config.ccl_version}", classifier: "dev"
+	compile group: "codechicken", name: "CodeChickenCore", version: "${config.mc_version}-${config.ccc_version}", classifier: "dev"
+	compile group: "codechicken", name: "NotEnoughItems", version: "${config.mc_version}-${config.nei_version}", classifier: "dev"
 }
