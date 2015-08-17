@@ -1,6 +1,6 @@
 package net.shadowfacts.shadowjs.js.block;
 
-import net.minecraft.block.Block;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * @author shadowfacts
@@ -8,11 +8,11 @@ import net.minecraft.block.Block;
 public class Blocks {
 
 	public static WrappedBlock get(String id) {
-		return new WrappedBlock((Block)Block.blockRegistry.getObject(id));
+		return get("minecraft", id);
 	}
 
 	public static WrappedBlock get(String modId, String id) {
-		return get(modId + ":" + id);
+		return new WrappedBlock(GameRegistry.findBlock(modId, id));
 	}
 
 }
