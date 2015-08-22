@@ -16,15 +16,8 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 	classifier = 'sources'
 }
 
-task apiJar(type: Jar) {
-	from sourceSets.main.java
-	include 'net/shadowfacts/shadowscript/api/**'
-	classifier = 'api'
-}
-
 artifacts {
 	archives jar
 	archives deobfJar
 	archives sourcesJar
-	archives apiJar
 }
