@@ -9,6 +9,10 @@ repositories {
 		url "http://chickenbones.net/maven/"
 	}
 	maven {
+		name "ProfMobius"
+		url "http://mobiusstrip.eu/maven/"
+	}
+	maven {
 		name "OpenComputers"
 		url "http://maven.cil.li"
 	}
