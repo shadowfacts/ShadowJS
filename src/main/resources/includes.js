@@ -17,4 +17,6 @@ var Mod = {
 		return Java.type("cpw.mods.fml.common.Loader").isModLoaded(modId);
 	}
 };
-if (Mod.isLoaded("NotEnoughItems")) Mod.NotEnoughItems = Java.type("net.shadowfacts.shadowjs.js.mod.NEI");
+if (Mod.isLoaded("NotEnoughItems"))	Mod.NotEnoughItems = Java.type("net.shadowfacts.shadowjs.js.mod.NEI");
+//if (Mod.isLoaded("EnderIO"))		Mod.EnderIO = Java.type("net.shadowfacts.shadowjs.js.mod.EnderIO");
+if (Mod.isLoaded("ThermalExpansion")) Mod.ThermalExpansion = Java.type("net.shadowfacts.shadowjs.js.mod.ThermalExpansion");

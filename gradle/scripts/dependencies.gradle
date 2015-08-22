@@ -8,6 +8,36 @@ repositories {
 		name "ChickenBones"
 		url "http://chickenbones.net/maven/"
 	}
+	maven {
+		name "OpenComputers"
+		url "http://maven.cil.li"
+	}
+	maven {
+		name "tterrag"
+		url "http://maven.tterrag.com/"
+	}
+
+	ivy {
+		name "CoFHLib"
+		artifactPattern "http://addons-origin.cursecdn.com/files/2243/944/[module]-[revision].[ext]"
+	}
+	ivy {
+		name "CoFHCore"
+		artifactPattern 'http://addons-origin.cursecdn.com/files/2244/285/[module]-[revision].[ext]'
+	}
+	ivy {
+		name "ThermalFoundation"
+		artifactPattern "http://addons-origin.cursecdn.com/files/2243/149/[module]-[revision].[ext]"
+	}
+	ivy {
+		name "ThermalExpansion"
+		artifactPattern "http://addons-origin.cursecdn.com/files/2233/797/[module]-[revision].[ext]"
+	}
+
+	ivy {
+		name "ThermalDynamics"
+		artifactPattern "http://addons-origin.cursecdn.com/files/2244/301/[module]-[revision].[ext]"
+	}
 }
 
 configurations {
@@ -21,4 +51,15 @@ dependencies {
 	compile group: "codechicken", name: "CodeChickenLib", version: "${config.mc_version}-${config.ccl_version}", classifier: "dev"
 	compile group: "codechicken", name: "CodeChickenCore", version: "${config.mc_version}-${config.ccc_version}", classifier: "dev"
 	compile group: "codechicken", name: "NotEnoughItems", version: "${config.mc_version}-${config.nei_version}", classifier: "dev"
+
+	compile group: "li.cil.oc", name: "OpenComputers", version: "MC${config.mc_version}-${config.oc_version}", classifier: "dev"
+
+	compile group: "com.enderio", name: "EnderIO", version: "${config.mc_version}-${config.eio_version}", classifier: "dev"
+
+	// CoFH
+	compile group: 'cofh', name: 'CoFHLib', version: "[${config.mc_version}]${config.cofh_lib_version}", ext: 'jar'
+	compile group: 'cofh', name: 'CoFHCore', version: "[${config.mc_version}]${config.cofh_core_version}", ext: 'jar'
+	compile group: 'cofh', name: 'ThermalFoundation', version: "[${config.mc_version}]${config.cofh_tf_version}", ext: 'jar'
+	compile group: 'cofh', name: 'ThermalExpansion', version: "[${config.mc_version}]${config.cofh_te_version}", ext: 'jar'
+	compile group: 'cofh', name: 'ThermalDynamics', version: "[${config.mc_version}]${config.cofh_td_version}", ext: 'jar'
 }
