@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.shadowfacts.shadowjs.api.item.Ingredient;
 
 import java.util.ArrayList;
@@ -17,9 +18,9 @@ import java.util.Optional;
 public class CraftingManager {
 
 	public static void registerShapedRecipe(Ingredient result,
-											Ingredient i1, Ingredient i2, Ingredient i3,
-											Ingredient i4, Ingredient i5, Ingredient i6,
-											Ingredient i7, Ingredient i8, Ingredient i9) {
+											Object i1, Object i2, Object i3,
+											Object i4, Object i5, Object i6,
+											Object i7, Object i8, Object i9) {
 
 		ArrayList<Object> params = new ArrayList<>();
 
@@ -48,44 +49,62 @@ public class CraftingManager {
 //		ABC
 		if (i1 != null) {
 			params.add('A');
-			params.add(i1.getItemStack());
+			if (i1 instanceof Ingredient) params.add(((Ingredient) i1).getItemStack());
+			else if (i1 instanceof String) params.add(i1);
+			else throw new RuntimeException("The first ingredient parameter should be an Ingredient or a string");
 		}
 		if (i2 != null) {
 			params.add('B');
-			params.add(i2.getItemStack());
+			if (i2 instanceof Ingredient) params.add(((Ingredient) i2).getItemStack());
+			else if (i2 instanceof String) params.add(i2);
+			else throw new RuntimeException("The second ingredient parameter should be an Ingredient or a string");
 		}
 		if (i3 != null) {
 			params.add('C');
-			params.add(i3.getItemStack());
+			if (i3 instanceof Ingredient) params.add(((Ingredient) i3).getItemStack());
+			else if (i3 instanceof String) params.add(i3);
+			else throw new RuntimeException("The third ingredient parameter should be an Ingredient or a string");
 		}
 //		DEF
 		if (i4 != null) {
 			params.add('D');
-			params.add(i4.getItemStack());
+			if (i4 instanceof Ingredient) params.add(((Ingredient) i4).getItemStack());
+			else if (i4 instanceof String) params.add(i4);
+			else throw new RuntimeException("The fourth ingredient parameter should be an Ingredient or a string");
 		}
 		if (i5 != null) {
 			params.add('E');
-			params.add(i5.getItemStack());
+			if (i5 instanceof Ingredient) params.add(((Ingredient) i5).getItemStack());
+			else if (i5 instanceof String) params.add(i5);
+			else throw new RuntimeException("The fifth ingredient parameter should be an Ingredient or a string");
 		}
 		if (i6 != null) {
 			params.add('F');
-			params.add(i6.getItemStack());
+			if (i6 instanceof Ingredient) params.add(((Ingredient) i6).getItemStack());
+			else if (i6 instanceof String) params.add(i6);
+			else throw new RuntimeException("The sixth ingredient parameter should be an Ingredient or a string");
 		}
 //		GHI
 		if (i7 != null) {
 			params.add('G');
-			params.add(i7.getItemStack());
+			if (i7 instanceof Ingredient) params.add(((Ingredient) i7).getItemStack());
+			else if (i7 instanceof String) params.add(i7);
+			else throw new RuntimeException("The seventh ingredient parameter should be an Ingredient or a string");
 		}
 		if (i8 != null) {
 			params.add('H');
-			params.add(i8.getItemStack());
+			if (i8 instanceof Ingredient) params.add(((Ingredient) i8).getItemStack());
+			else if (i8 instanceof String) params.add(i8);
+			else throw new RuntimeException("The eighth ingredient parameter should be an Ingredient or a string");
 		}
 		if (i9 != null) {
 			params.add('I');
-			params.add(i9.getItemStack());
+			if (i9 instanceof Ingredient) params.add(((Ingredient) i9).getItemStack());
+			else if (i9 instanceof String) params.add(i9);
+			else throw new RuntimeException("The ninth ingredient parameter should be an Ingredient or a string");
 		}
 
-		GameRegistry.addShapedRecipe(result.getItemStack(), params.toArray());
+		GameRegistry.addRecipe(new ShapedOreRecipe(result.getItemStack(), params.toArray()));
 	}
 
 	public static void registerShapelessRecipe(Ingredient result, Ingredient... inputs) {
