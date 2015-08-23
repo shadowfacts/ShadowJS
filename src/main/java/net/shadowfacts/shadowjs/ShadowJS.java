@@ -44,6 +44,7 @@ public class ShadowJS {
 
 		main = new File(scriptsDir.getAbsolutePath() + "/main.js");
 		if (!main.exists()) {
+			log.info("main.js did not exist, automatically creating it");
 			main.createNewFile();
 			PrintStream printStream = new PrintStream(new FileOutputStream(main));
 			printStream.print("// ShadowJS entry point");
@@ -55,31 +56,36 @@ public class ShadowJS {
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) throws ScriptException {
 		scriptEngine = new ScriptEngineManager().getEngineByName("nashorn");
+		if (scriptEngine != null) {
 
-
-		String includes = "";
-		try {
-			includes = Resources.toString(Resources.getResource("includes.js"), Charsets.UTF_8);
-		} catch (IOException e) {
-			ShadowJS.log.error("There was a problem loading the includes file.");
-			e.printStackTrace();
-		}
-
-		log.info("Evaluating includes");
-		scriptEngine.eval(includes);
-
-
-
-		if (main.exists()) {
+			String includes = "";
 			try {
-				log.info("Evaluating main.js");
-				scriptEngine.eval(new FileReader(main));
-			} catch (FileNotFoundException e) {
-				ShadowJS.log.error("There was a problem loading the main file");
+				includes = Resources.toString(Resources.getResource("includes.js"), Charsets.UTF_8);
+			} catch (IOException e) {
+				ShadowJS.log.error("There was a problem loading the includes file.");
+				e.printStackTrace();
 			}
+
+			log.info("Evaluating includes");
+			scriptEngine.eval(includes);
+
+
+			if (main.exists()) {
+				try {
+					log.info("Evaluating main.js");
+					scriptEngine.eval(new FileReader(main));
+				} catch (FileNotFoundException e) {
+					ShadowJS.log.error("There was a problem loading the main file");
+				}
+			} else {
+				ShadowJS.log.warn("./config/shadowfacts/scripts/main.js did not exist!");
+				ShadowJS.log.info("There's really no point using ShadowJS if you don't have a main script :V");
+			}
+
 		} else {
-			ShadowJS.log.warn("./config/shadowfacts/scripts/main.js did not exist!");
-			ShadowJS.log.info("There's really no point using ShadowJS if you don't have a main script :V");
+			log.error("Nashorn did not exist, you must use Java 8.");
+			log.error("You are currently using Java " + System.getProperty("java.version"));
+			throw new RuntimeException("Missing Nashorn script engine!");
 		}
 	}
 
