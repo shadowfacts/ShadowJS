@@ -25,7 +25,7 @@ public class ShadowJS {
 
 	public static final String modId = "ShadowJS";
 	public static final String name = "ShadowJS";
-	public static final String version = "0.1.0";
+	public static final String version = "0.1.0-RC2";
 
 	public static final Logger log = LogManager.getLogger("ShadowJS");
 
@@ -36,6 +36,8 @@ public class ShadowJS {
 	private File main;
 
 	private ScriptEngine scriptEngine;
+
+	private String includes = "";
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) throws IOException {
@@ -51,6 +53,14 @@ public class ShadowJS {
 			printStream.close();
 		}
 
+		ShadowJS.log.info("Loading includes");
+		try {
+			includes = Resources.toString(Resources.getResource("includes.js"), Charsets.UTF_8);
+		} catch (IOException e) {
+			ShadowJS.log.error("There was a problem loading the includes file.");
+			e.printStackTrace();
+		}
+
 	}
 
 	@Mod.EventHandler
@@ -58,17 +68,8 @@ public class ShadowJS {
 		scriptEngine = new ScriptEngineManager().getEngineByName("nashorn");
 		if (scriptEngine != null) {
 
-			String includes = "";
-			try {
-				includes = Resources.toString(Resources.getResource("includes.js"), Charsets.UTF_8);
-			} catch (IOException e) {
-				ShadowJS.log.error("There was a problem loading the includes file.");
-				e.printStackTrace();
-			}
-
 			log.info("Evaluating includes");
 			scriptEngine.eval(includes);
-
 
 			try {
 				log.info("Evaluating main.js");
@@ -89,14 +90,31 @@ public class ShadowJS {
 		event.registerServerCommand(CommandHand.instance);
 	}
 
+	/**
+	 * @return The scripts directory at .minecraft/config/shadowfacts/scripts/
+	 */
 	public File getScriptsDir() {
 		return scriptsDir;
 	}
 
+	/**
+	 * @return The Nashorn {@link javax.script.ScriptEngine} being used
+	 */
 	public ScriptEngine getScriptEngine() {
 		return scriptEngine;
 	}
 
+	/**
+	 * Adds the specified string to the includes. The includes are evaluated immediately before main.js
+	 * @param str
+	 */
+	public void addInclude(String str) {
+		includes += str;
+	}
+
+	/**
+	 * @return The mod instance provided by {@link cpw.mods.fml.common.Mod.Instance}
+	 */
 	public static ShadowJS getInstance() {
 		return instance;
 	}
