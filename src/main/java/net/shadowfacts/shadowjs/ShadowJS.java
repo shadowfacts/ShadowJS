@@ -70,16 +70,11 @@ public class ShadowJS {
 			scriptEngine.eval(includes);
 
 
-			if (main.exists()) {
-				try {
-					log.info("Evaluating main.js");
-					scriptEngine.eval(new FileReader(main));
-				} catch (FileNotFoundException e) {
-					ShadowJS.log.error("There was a problem loading the main file");
-				}
-			} else {
-				ShadowJS.log.warn("./config/shadowfacts/scripts/main.js did not exist!");
-				ShadowJS.log.info("There's really no point using ShadowJS if you don't have a main script :V");
+			try {
+				log.info("Evaluating main.js");
+				scriptEngine.eval(new FileReader(main));
+			} catch (FileNotFoundException e) {
+				ShadowJS.log.error("There was a problem loading the main file");
 			}
 
 		} else {
