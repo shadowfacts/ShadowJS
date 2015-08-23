@@ -7,6 +7,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import net.shadowfacts.shadowjs.command.CommandHand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -65,24 +66,19 @@ public class ShadowJS {
 
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) throws ScriptException {
-		scriptEngine = new ScriptEngineManager().getEngineByName("nashorn");
-		if (scriptEngine != null) {
+		NashornScriptEngineFactory factory = new NashornScriptEngineFactory();
+		scriptEngine = factory.getScriptEngine(new SJSClassFilter());
 
-			log.info("Evaluating includes");
-			scriptEngine.eval(includes);
+		log.info("Evaluating includes");
+		scriptEngine.eval(includes);
 
-			try {
-				log.info("Evaluating main.js");
-				scriptEngine.eval(new FileReader(main));
-			} catch (FileNotFoundException e) {
-				ShadowJS.log.error("There was a problem loading the main file");
-			}
-
-		} else {
-			log.error("Nashorn did not exist, you must use Java 8.");
-			log.error("You are currently using Java " + System.getProperty("java.version"));
-			throw new RuntimeException("Missing Nashorn script engine!");
+		try {
+			log.info("Evaluating main.js");
+			scriptEngine.eval(new FileReader(main));
+		} catch (FileNotFoundException e) {
+			ShadowJS.log.error("There was a problem loading the main file");
 		}
+
 	}
 
 	@Mod.EventHandler

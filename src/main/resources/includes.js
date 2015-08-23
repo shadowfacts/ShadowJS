@@ -12,9 +12,7 @@ var OreDictionary = Java.type("net.shadowfacts.shadowjs.js.misc.OreDictionaryInt
 
 // Mod Compat
 var Mod = {
-	isLoaded: function(modId) {
-		return Java.type("cpw.mods.fml.common.Loader").isModLoaded(modId);
-	}
+	isLoaded: Minecraft.isModLoaded
 };
 if (Mod.isLoaded("NotEnoughItems"))	Mod.NotEnoughItems = Java.type("net.shadowfacts.shadowjs.js.mod.NEI");
 //if (Mod.isLoaded("EnderIO"))		Mod.EnderIO = Java.type("net.shadowfacts.shadowjs.js.mod.EnderIO");
