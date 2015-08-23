@@ -14,10 +14,7 @@ import org.apache.logging.log4j.Logger;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 
 /**
@@ -36,13 +33,23 @@ public class ShadowJS {
 	private static ShadowJS instance;
 
 	private File scriptsDir;
+	private File main;
 
 	private ScriptEngine scriptEngine;
 
 	@Mod.EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(FMLPreInitializationEvent event) throws IOException {
 		scriptsDir = new File(event.getModConfigurationDirectory().getAbsolutePath() + "/shadowfacts/scripts/");
 		if (!scriptsDir.exists()) scriptsDir.mkdirs();
+
+		main = new File(scriptsDir.getAbsolutePath() + "/main.js");
+		if (!main.exists()) {
+			main.createNewFile();
+			PrintStream printStream = new PrintStream(new FileOutputStream(main));
+			printStream.print("// ShadowJS entry point");
+			printStream.close();
+		}
+
 	}
 
 	@Mod.EventHandler
@@ -62,7 +69,7 @@ public class ShadowJS {
 		scriptEngine.eval(includes);
 
 
-		File main = new File(scriptsDir.getAbsolutePath() + "/main.js");
+
 		if (main.exists()) {
 			try {
 				log.info("Evaluating main.js");
