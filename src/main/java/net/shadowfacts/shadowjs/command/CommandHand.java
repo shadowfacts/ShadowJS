@@ -6,6 +6,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * @author shadowfacts
@@ -37,6 +38,13 @@ public class CommandHand extends CommandBase {
 			result += ":" + heldStack.getItemDamage();
 
 			player.addChatComponentMessage(new ChatComponentText(result));
+
+			String result2 = "";
+			int[] ids = OreDictionary.getOreIDs(heldStack);
+			for (int id : ids) {
+				result2 += OreDictionary.getOreName(id) + ", ";
+			}
+			if (!result2.equals("")) player.addChatComponentMessage(new ChatComponentText("Ore Dictionary names: " + result2.substring(0, result2.length() - 2)));
 
 		}
 	}
