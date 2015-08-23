@@ -11,7 +11,7 @@ public class WrappedItemStack implements Ingredient {
 
 	private ItemStack stack;
 
-	WrappedItemStack(ItemStack stack) {
+	public WrappedItemStack(ItemStack stack) {
 		this.stack = stack;
 	}
 
