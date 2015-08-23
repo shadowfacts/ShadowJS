@@ -9,6 +9,10 @@ import cpw.mods.fml.relauncher.Side;
  */
 public class MinecraftInterface {
 
+	public static Side getSide() {
+		return FMLCommonHandler.instance().getSide();
+	}
+
 	public static void addCrashReportMessage(String label, String msg) {
 		FMLCommonHandler.instance().registerCrashCallable(new ICrashCallable() {
 			@Override
