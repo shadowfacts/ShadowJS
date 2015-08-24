@@ -10,6 +10,9 @@ var ItemStacks = Java.type("net.shadowfacts.shadowjs.js.itemstack.ItemStacks");
 var CraftingManager = Java.type("net.shadowfacts.shadowjs.js.recipe.CraftingManager");
 var OreDictionary = Java.type("net.shadowfacts.shadowjs.js.misc.OreDictionaryInterface");
 
+var Events = Java.type("net.shadowfacts.shadowjs.js.event.Events");
+var EventRegistry = Java.type("net.shadowfacts.shadowjs.js.event.JSEventRegistry");
+
 // Mod Compat
 var Mod = {
 	isLoaded: Minecraft.isModLoaded

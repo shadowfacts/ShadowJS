@@ -1,22 +1,21 @@
 package net.shadowfacts.shadowjs;
 
 import com.google.common.base.Charsets;
-import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
+import net.minecraftforge.common.MinecraftForge;
 import net.shadowfacts.shadowjs.command.CommandHand;
+import net.shadowfacts.shadowjs.js.event.JSEventRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.*;
-import java.util.Arrays;
 
 /**
  * @author shadowfacts
@@ -62,6 +61,8 @@ public class ShadowJS {
 			e.printStackTrace();
 		}
 
+		ShadowJS.log.info("Registering main event handler");
+		MinecraftForge.EVENT_BUS.register(JSEventRegistry.getInstance());
 	}
 
 	@Mod.EventHandler

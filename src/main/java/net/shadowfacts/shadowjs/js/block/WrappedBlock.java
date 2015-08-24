@@ -10,9 +10,9 @@ import net.shadowfacts.shadowjs.api.item.Ingredient;
  */
 public class WrappedBlock implements Ingredient {
 
-	private Block block;
+	public Block block;
 
-	WrappedBlock(Block block) {
+	public WrappedBlock(Block block) {
 		this.block = block;
 	}
 
