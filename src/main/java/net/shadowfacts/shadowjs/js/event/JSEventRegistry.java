@@ -19,14 +19,30 @@ public class JSEventRegistry {
 		return instance;
 	}
 
-	private static HashMap<Class, ArrayList<ScriptObjectMirror>> eventHandlerMap = new HashMap<>();
+	private static HashMap<Class, Events> classEventsHashMap = new HashMap<>();
+
+	static {
+		registerEvent(Events.BreakBlock);
+		registerEvent(Events.HarvestBlockDrops);
+		registerEvent(Events.PlaceBlock);
+	}
+
+	private static HashMap<Class, ArrayList<ScriptObjectMirror>> handlers = new HashMap<>();
+
+	static void registerEvent(Class eventClass, Events event) {
+		classEventsHashMap.put(eventClass, event);
+	}
+
+	static void registerEvent(Events event) {
+		registerEvent(event.forgeEventClass, event);
+	}
 
 	private static void registerHandler(Class eventClass, ScriptObjectMirror handler) {
 		if (handler.isFunction()) {
-			if (eventHandlerMap.get(eventClass) == null) {
-				eventHandlerMap.put(eventClass, new ArrayList<>());
+			if (handlers.get(eventClass) == null) {
+				handlers.put(eventClass, new ArrayList<>());
 			}
-			eventHandlerMap.get(eventClass).add(handler);
+			handlers.get(eventClass).add(handler);
 			ShadowJS.log.info("Registered handler for event: " + eventClass.getName());
 		} else {
 			throw new IllegalArgumentException("Cannot register a non-function event handler");
@@ -34,17 +50,22 @@ public class JSEventRegistry {
 	}
 
 	public static void registerHandler(Events event, ScriptObjectMirror handler) {
-		registerHandler(event.eventClass, handler);
-	}
-
-	private JSEventRegistry() {
+		registerHandler(event.forgeEventClass, handler);
 	}
 
 	@SubscribeEvent
 	public void handleEvent(Event event) {
-		ArrayList<ScriptObjectMirror> handlers = eventHandlerMap.get(event.getClass());
-		if (handlers != null) {
-			handlers.stream().forEach(handler -> handler.call(null, event));
+		Events events = classEventsHashMap.get(event.getClass());
+		if (events != null) {
+			try {
+				Object jsEvent = events.jsEventClass.getConstructor(event.getClass()).newInstance(event);
+				ArrayList<ScriptObjectMirror> handlers = JSEventRegistry.handlers.get(event.getClass());
+				if (handlers != null) {
+					handlers.stream().forEach(handler -> handler.call(null, jsEvent));
+				}
+			} catch (ReflectiveOperationException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
