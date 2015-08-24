@@ -40,6 +40,8 @@ archivesBaseName = config.archivesBaseName
 minecraft {
 	version = "${config.mc_version}-${config.forge_version}"
 	runDir = "run"
+
+	srgExtra "PK: net/shadowfacts/shadowlib net/shadowfacts/shadowmc/shadowlib"
 }
 
 processResources {
