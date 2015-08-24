@@ -3,6 +3,7 @@ package net.shadowfacts.shadowjs.js.itemstack;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.shadowfacts.shadowjs.api.item.Ingredient;
+import net.shadowfacts.shadowjs.js.nbt.WrappedTagCompound;
 
 /**
  * @author shadowfacts
@@ -10,6 +11,7 @@ import net.shadowfacts.shadowjs.api.item.Ingredient;
 public class WrappedItemStack implements Ingredient {
 
 	private ItemStack stack;
+	private WrappedTagCompound tagCompound;
 
 	public WrappedItemStack(ItemStack stack) {
 		this.stack = stack;
@@ -23,6 +25,13 @@ public class WrappedItemStack implements Ingredient {
 	public WrappedItemStack registerOreDictionaryName(String name) {
 		OreDictionary.registerOre(name, stack);
 		return this;
+	}
+
+	public WrappedTagCompound getTagCompound() {
+		if (tagCompound == null && stack.getTagCompound() != null) {
+			tagCompound = new WrappedTagCompound(stack.getTagCompound());
+		}
+		return tagCompound;
 	}
 
 	@Override
