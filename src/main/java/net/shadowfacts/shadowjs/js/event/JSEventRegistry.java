@@ -21,12 +21,6 @@ public class JSEventRegistry {
 
 	private static HashMap<Class, Events> classEventsHashMap = new HashMap<>();
 
-	static {
-		registerEvent(Events.BreakBlock);
-		registerEvent(Events.HarvestBlockDrops);
-		registerEvent(Events.PlaceBlock);
-	}
-
 	private static HashMap<Class, ArrayList<ScriptObjectMirror>> handlers = new HashMap<>();
 
 	static void registerEvent(Class eventClass, Events event) {
