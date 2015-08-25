@@ -2,12 +2,10 @@ package net.shadowfacts.shadowjs.js.event;
 
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
-import net.shadowfacts.shadowjs.js.event.wrapper.BlockEvents;
-import net.shadowfacts.shadowjs.js.event.wrapper.ExplosionEvents;
-import net.shadowfacts.shadowjs.js.event.wrapper.ItemEvents;
-import net.shadowfacts.shadowjs.js.event.wrapper.ServerChatMessageReceived;
+import net.shadowfacts.shadowjs.js.event.wrapper.*;
 
 /**
  * @author shadowfacts
@@ -20,7 +18,8 @@ public enum Events {
 	ExplosionStart(ExplosionEvent.Start.class, ExplosionEvents.Start.class),
 	ExplosionDetonate(ExplosionEvent.Detonate.class, ExplosionEvents.Detonate.class),
 	ServerChatMessageReceived(ServerChatEvent.class, ServerChatMessageReceived.class),
-	ItemThrown(ItemTossEvent.class, ItemEvents.ItemThrownEvent.class);
+	ItemThrown(ItemTossEvent.class, ItemEvents.ItemThrownEvent.class),
+	EnderTeleport(EnderTeleportEvent.class, LivingEvent.EnderTeleport.class);
 
 
 	Class forgeEventClass;
