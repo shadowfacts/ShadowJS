@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.*;
 
@@ -67,8 +68,7 @@ public class ShadowJS {
 
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) throws ScriptException {
-		NashornScriptEngineFactory factory = new NashornScriptEngineFactory();
-		scriptEngine = factory.getScriptEngine(new SJSClassFilter());
+		scriptEngine = new ScriptEngineManager(null).getEngineByName("nashorn");
 
 		log.info("Evaluating includes");
 		scriptEngine.eval(includes);
