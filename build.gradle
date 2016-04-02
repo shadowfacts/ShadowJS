@@ -54,7 +54,15 @@ repositories {
 		name "progwml6"
 		url "http://dvs1.progwml6.com/files/maven/"
 	}
-	mavenLocal()
+	
+	ivy {
+		name "Baubles"
+		artifactPattern "http://addons-origin.cursecdn.com/files/2273/274/[module]-[revision].[ext]"
+	}
+	ivy {
+		name "Thaumcraft"
+		artifactPattern "http://addons-origin.cursecdn.com/files/2287/496/[module]-[revision].[ext]"
+	}
 }
 
 dependencies {
